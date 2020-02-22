@@ -1,7 +1,7 @@
 ## Overview
 This sample code describes how to configure your [Kinesis Data Analytics for Java](https://aws.amazon.com/kinesis/data-analytics/) application to use a custom keystore when communicating with Kafka.
 
-We need a way to deliver our custom keystore to the KDA/Flink environment, since we don't have access to the runners directly. Overriding the `open()` method of the `FlinkKafkaConsumer` class gives us a way to place our custom keystore on every runner, and ensure that the keystore is available across restarts and runner replacements.
+We need a way to deliver our custom keystore to the KDA/Flink environment, since we don't have access to the runners directly. Overriding the `open()` method of the `FlinkKafkaConsumer` class allows us to place our custom keystore on every runner while ensuring that the keystore is available across restarts and runner replacements.
 
 ### Overriding the `FlinkKafkaConsumer` class
 

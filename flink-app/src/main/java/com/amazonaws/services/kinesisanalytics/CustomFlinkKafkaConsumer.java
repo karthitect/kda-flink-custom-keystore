@@ -16,14 +16,14 @@ public class CustomFlinkKafkaConsumer<T> extends FlinkKafkaConsumer<T> {
     }
 
     /*
-     We need to override the 'open' method of the FlinkKafkaConsumer to drop our custom
+     Override the 'open' method of the FlinkKafkaConsumer to drop our custom
      keystore. This is necessary so that certs are available to be picked up in spite of
      runner restarts and replacements.
      */
     @Override
     public void open(Configuration configuration) throws Exception {
         // write keystore to /tmp
-        // make sure that keystore is in JKS format for KDA/Flink
+        // NOTE: make sure that keystore is in JKS format for KDA/Flink. See README for details
         dropFile("/tmp");
 
         super.open(configuration);
