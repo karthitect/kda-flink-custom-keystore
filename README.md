@@ -1,11 +1,11 @@
 ## Overview
 This sample code describes how to configure your [Kinesis Data Analytics for Java](https://aws.amazon.com/kinesis/data-analytics/) application to use a custom keystore when communicating with Kafka.
 
-We need a way to deliver our custom keystore to the KDA/Flink environment, since we don't have access to the runners directly. Overriding the `open()` method of the FlinkKafkaConsumer gives us a way to deliver our custom keystore to every runner, even across restarts and runner replacements.
+We need a way to deliver our custom keystore to the KDA/Flink environment, since we don't have access to the runners directly. Overriding the `open()` method of the FlinkKafkaConsumer gives us a way to place our custom keystore on every runner, and ensure that the keystore is available across restarts and runner replacements.
 
 ### Overriding the FlinkKafkaConsumer
 
-In the overriden `open()` method of [`CustomFlinkKafkaConsumer`](flink-app/src/main/java/com/amazonaws/services/kinesisanalytics/CustomFlinkConsumer.java) (inherited from [`FlinkKafkaConsumer`](https://ci.apache.org/projects/flink/flink-docs-stable/dev/connectors/kafka.html)), we can write our custom keystore to `/tmp` as shown below:
+In the overriden `open()` method of [`CustomFlinkKafkaConsumer`](https://github.com/karthitect/kda-flink-custom-keystore/blob/master/flink-app/src/main/java/com/amazonaws/services/kinesisanalytics/CustomFlinkKafkaConsumer.java) (inherited from [`FlinkKafkaConsumer`](https://ci.apache.org/projects/flink/flink-docs-stable/dev/connectors/kafka.html)), we can write our custom keystore to `/tmp` as shown below:
 
 ```
 ...
@@ -58,7 +58,7 @@ In the overriden `open()` method of [`CustomFlinkKafkaConsumer`](flink-app/src/m
 
 ### Specifying keystore location
 
-In our `main()` application we configure the truststore location as shown below:
+In our `main()` function, we configure the truststore location as shown below:
 
 ```
 ...
