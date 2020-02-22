@@ -58,7 +58,7 @@ In the overriden `open()` method of [`CustomFlinkKafkaConsumer`](https://github.
 
 ### Specifying keystore location
 
-In our `main()` function, we configure the truststore location as shown below:
+In our [`main()` function](https://github.com/karthitect/kda-flink-custom-keystore/blob/master/flink-app/src/main/java/com/amazonaws/services/kinesisanalytics/KDAFlinkStreamingJob.java), we configure the truststore location as shown below:
 
 ```
 ...
