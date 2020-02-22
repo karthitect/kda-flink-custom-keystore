@@ -3,7 +3,7 @@ This sample code describes how to configure your [Kinesis Data Analytics for Jav
 
 We need a way to deliver our custom keystore to the KDA/Flink environment, since we don't have access to the runners directly. Overriding the `open()` method of the FlinkKafkaConsumer gives us a way to place our custom keystore on every runner, and ensure that the keystore is available across restarts and runner replacements.
 
-### Overriding the FlinkKafkaConsumer
+### Overriding the `FlinkKafkaConsumer` class
 
 In the overriden `open()` method of [`CustomFlinkKafkaConsumer`](https://github.com/karthitect/kda-flink-custom-keystore/blob/master/flink-app/src/main/java/com/amazonaws/services/kinesisanalytics/CustomFlinkKafkaConsumer.java) (inherited from [`FlinkKafkaConsumer`](https://ci.apache.org/projects/flink/flink-docs-stable/dev/connectors/kafka.html)), we can write our custom keystore to `/tmp` as shown below:
 
