@@ -5,19 +5,19 @@ We need a way to deliver our custom keystore to the KDA/Flink environment, since
 
 ### Overriding the `FlinkKafkaConsumer` class
 
-In the overriden `open()` method of [`CustomFlinkKafkaConsumer`](https://github.com/karthitect/kda-flink-custom-keystore/blob/master/flink-app/src/main/java/com/amazonaws/services/kinesisanalytics/CustomFlinkKafkaConsumer.java) (inherited from [`FlinkKafkaConsumer`](https://ci.apache.org/projects/flink/flink-docs-stable/dev/connectors/kafka.html)), we can write our custom keystore to `/tmp` as shown below:
+In the overriden [`open()`](https://github.com/karthitect/kda-flink-custom-keystore/blob/9a494476b8b63980286789ffc528e976055c0c9b/flink-app/src/main/java/com/amazonaws/services/kinesisanalytics/CustomFlinkKafkaConsumer.java#L24) method of [`CustomFlinkKafkaConsumer`](https://github.com/karthitect/kda-flink-custom-keystore/blob/master/flink-app/src/main/java/com/amazonaws/services/kinesisanalytics/CustomFlinkKafkaConsumer.java) (inherited from [`FlinkKafkaConsumer`](https://ci.apache.org/projects/flink/flink-docs-stable/dev/connectors/kafka.html)), we can write our custom keystore to `/tmp` as shown below:
 
 ```
 ...
     /*
-     We need to override the 'open' method of the FlinkKafkaConsumer to drop our custom
+     Override the 'open' method of the FlinkKafkaConsumer to drop our custom
      keystore. This is necessary so that certs are available to be picked up in spite of
      runner restarts and replacements.
      */
     @Override
     public void open(Configuration configuration) throws Exception {
         // write keystore to /tmp
-        // make sure that keystore is in JKS format for KDA/Flink
+        // NOTE: make sure that keystore is in JKS format for KDA/Flink. See README for details
         dropFile("/tmp");
 
         super.open(configuration);
