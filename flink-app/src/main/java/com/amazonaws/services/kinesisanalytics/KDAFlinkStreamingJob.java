@@ -6,6 +6,7 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer;
+import org.apache.flink.streaming.connectors.kafka.internals.KeyedSerializationSchemaWrapper;
 import org.apache.flink.streaming.util.serialization.KeyedSerializationSchema;
 
 import java.io.IOException;
@@ -31,13 +32,14 @@ public class KDAFlinkStreamingJob {
 
 	private static FlinkKafkaProducer<String> createKafkaSinkFromApplicationProperties() throws IOException {
 		Map<String, Properties> applicationProperties = KinesisAnalyticsRuntime.getApplicationProperties();
-		KeyedSerializationSchema<String> serializationSchema =
-				(KeyedSerializationSchema<String>)(new SimpleStringSchema());
+
+		KeyedSerializationSchema keyedSerializationSchema =
+				new KeyedSerializationSchemaWrapper(new SimpleStringSchema());
 
 		// Configure FlinkProducer for exactly-once semantics
 		FlinkKafkaProducer<String> sink = new FlinkKafkaProducer<>(
 				(String) applicationProperties.get("KafkaSink").get("topic"),
-				serializationSchema,
+				keyedSerializationSchema,
 				applicationProperties.get("KafkaSink"),
 				FlinkKafkaProducer.Semantic.EXACTLY_ONCE);
 		return sink;
